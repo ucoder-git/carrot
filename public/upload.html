@@ -70,12 +70,12 @@
 
     <script>
       const firebaseConfig = {
-  apiKey: "AIzaSyCTArZnFf5izLlNIf0ACnGVqsahaSLnNoA",
-  authDomain: "carrot-77be2.firebaseapp.com",
-  projectId: "carrot-77be2",
-  storageBucket: "carrot-77be2.appspot.com",
-  messagingSenderId: "82661506228",
-  appId: "1:82661506228:web:8ee6deb33b5e8135efebe1"
+        apiKey: "AIzaSyDhs9TCKFrMfM52pRt79mH9zHT0wgn_SZg",
+  authDomain: "vowing-admin-58673.firebaseapp.com",
+  projectId: "vowing-admin-58673",
+  storageBucket: "vowing-admin-58673.appspot.com",
+  messagingSenderId: "415817966257",
+  appId: "1:415817966257:web:1e2a51fcfc2e8ed54bf890"
 };
 
 // Initialize Firebase
@@ -89,6 +89,8 @@ firebase.initializeApp(firebaseConfig)
 <script>
   const db = firebase.firestore();
   const storage = firebase.storage();
+  // db.collection('product').doc('상품4').set({제목 : '변기'})
+  db.collection('product').add({'제목' : })
 
   $('#send').click(function(){
 
@@ -104,6 +106,8 @@ firebase.initializeApp(firebaseConfig)
       날짜 : new Date(),
     
     }  
+
+
   db.collection('product').add(저장할거).then((result)=> {
     console.log(result);
     window.location.href = "/index.html";
