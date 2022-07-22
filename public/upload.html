@@ -89,11 +89,9 @@ firebase.initializeApp(firebaseConfig)
 <script>
   const db = firebase.firestore();
   const storage = firebase.storage();
-<<<<<<< HEAD
-=======
+
   // db.collection('product').doc('상품4').set({제목 : '변기'})
   db.collection('product').add({'제목' : })
->>>>>>> 58a85cadc262963fb591d41c2261af6f4fe1398b
 
   $('#send').click(function(){
 
@@ -113,11 +111,8 @@ firebase.initializeApp(firebaseConfig)
     () => {
       업로드작업.snapshot.ref.getDownloadURL().then((url) => {
         console.log('업로드된 경로는', url);
-      });
-    }
-);
 
-
+        
     var 저장할거 = {
       제목 : $('#title').val(),
       가격 : $('#price').val(),
@@ -132,6 +127,13 @@ firebase.initializeApp(firebaseConfig)
   }).catch((err)=> {
     console.log(err)
   })
+
+
+      });
+    }
+);
+
+
 })
 
 </script>
