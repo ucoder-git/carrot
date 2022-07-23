@@ -13,7 +13,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
    
-
   </head>
   <body>
     
@@ -25,6 +24,8 @@
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">보윙어드민</a>
+
+        <span class="ms-auto mx-2" id ="userName">whoa</span>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -84,26 +85,36 @@
         </div>
         <button type="submit" class="btn btn-primary" id="register">로그인하기</button>
      </div>
-    <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyCTArZnFf5izLlNIf0ACnGVqsahaSLnNoA",
-  authDomain: "carrot-77be2.firebaseapp.com",
-  projectId: "carrot-77be2",
-  storageBucket: "carrot-77be2.appspot.com",
-  messagingSenderId: "82661506228",
-  appId: "1:82661506228:web:8ee6deb33b5e8135efebe1"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig) 
-    </script>
-
 
 <div class="container mt-3">
 </div>
 <script>
   const db = firebase.firestore();
   const storage = firebase.storage();
+
+  //유저정보 확인
+  var 뺀거 = localStorage.getItem('user')
+  JSON.parse(뺀거)
+
+  firebase.auth().onAuthStateChanged((user)=>{
+
+    if(user){
+      console.log(user).uid
+      console.log(user.displayName)
+      localStorage.setItem('user', JSON.stringify(user))
+      $('#userName').html(user.displayName)
+
+    }
+  })
+
+  $('#logout').click(function(){
+    firebase.auth().signOut()
+  })
+  $('#login').click(function(){
+    firebase.auth().signWithEmailAndPassword(이메일,패스워드).then(()=>{
+
+    })
+  })
 
   $('#register').click(function(){
 
