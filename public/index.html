@@ -83,6 +83,8 @@
     const db = firebase.firestore();
     const storage = firebase.storage(); //이미지 저장
 
+    console.log(db);
+
     //유저정보 확인
     let userInfo = localStorage.getItem('user');
     $('#userName').html(JSON.parse(userInfo).displayName);

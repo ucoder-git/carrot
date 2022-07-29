@@ -23,7 +23,7 @@
 
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">보윙어드민(upload)</a>
+      <a class="navbar-brand" href="#">보윙어드민</a>
       <span id="userName" class="ms-auto mx-2"></span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -120,6 +120,8 @@
               내용 : $('#content').val(),
               날짜 : new Date(),
               이미지 : url,
+              uid : JSON.parse(localStorage.getItem('user')).uid,
+              이름 : JSON.parse(localStorage.getItem('user')).displayName,
             }
 
             db.collection('product2').add(makeProductList).then((result)=> {

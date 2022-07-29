@@ -23,7 +23,7 @@
 
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">보윙어드민(upload)</a>
+      <a class="navbar-brand" href="#">보윙어드민</a>
       <span id="userName" class="ms-auto mx-2"></span>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -95,9 +95,6 @@
     let urlParamsId = urlParams.get('id');
 
     db.collection('product2').doc(urlParamsId).get().then((result)=>{
-      let data = result.data();
-
-      console.log(JSON.parse(userInfo).displayName);
 
       const {제목, 날짜, 가격, 이미지} = result.data();
 
@@ -107,10 +104,10 @@
       let formatDate = dataYear + '년 ' + dataMonth + '월 ' + dataDate + '일';
 
       $div = `
-        <button class="btn">수정</button>
+        <button id="edit">수정</button>
         <div class="detail-pic my-4" style="background-image: url(${이미지 || 'https://via.placeholder.com/350'});"></div>
         <div>
-          <h5>올린사람 : 모름</h5>
+          <h5>올린사람 : ${JSON.parse(userInfo).displayName}</h5>
           <hr>
           <h5 class="title">${제목}</h5>
           <p class="date">${formatDate}</p>
@@ -119,6 +116,10 @@
       `;
 
       $('#productDetail').append($div);
+
+      $('#edit').click(function() {
+        window.location.href = `/edit.html?id=${urlParamsId}`;
+      })
     })
   </script>
 </body>
