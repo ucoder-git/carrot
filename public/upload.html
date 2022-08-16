@@ -24,7 +24,7 @@
   
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">보윙어드민</a>
+        <a class="navbar-brand" href="#">당근마켓</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -90,8 +90,8 @@ firebase.initializeApp(firebaseConfig)
   const db = firebase.firestore();
   const storage = firebase.storage();
 
-  // db.collection('product').doc('상품4').set({제목 : '변기'})
-  db.collection('product').add({'제목' : })
+  db.collection('product').doc('상품3').set({제목 : '변기'})
+  // db.collection('product').add({'제목' : })
 
   $('#send').click(function(){
 
@@ -118,7 +118,7 @@ firebase.initializeApp(firebaseConfig)
       가격 : $('#price').val(),
       내용 : $('#content').val(),
       날짜 : new Date(),
-    
+      이미지 : url
     }  
 
   db.collection('product').add(저장할거).then((result)=> {

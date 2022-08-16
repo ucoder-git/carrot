@@ -82,7 +82,7 @@
         <div class="mb-3">
           <input type="password" class="form-control" placeholder="pw" id="pw">
         </div>
-        <button type="submit" class="btn btn-primary" id="register">로그인하기</button>
+        <button type="submit" class="btn btn-primary" id="login">로그인하기</button>
      </div>
     <script>
       const firebaseConfig = {
@@ -105,7 +105,19 @@ firebase.initializeApp(firebaseConfig)
   const db = firebase.firestore();
   const storage = firebase.storage();
 
+  $('#login').click(function(){
+    var 이메일 = $('#email').val();
+    var 패스워드 = $('#pw').val();
+
+    firebase.auth().signInWithEmailAndPassword(이메일,패스워드).then((result)=> {
+        console.log(result.user)
+    })
+  })
+
+
   $('#register').click(function(){
+
+    var
 
     var 이메일 = $('#email-new').val();
     var 패스워드 = $('#pw-new').val();
