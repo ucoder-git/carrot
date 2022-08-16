@@ -61,11 +61,9 @@
     </div>
   </nav>
 
-  <div class="upload-container">
-    <button class="btn btn-success"><a href='upload.html'>업로드</a></button>
+  <div class="container mt-3" id="productDetail">
+    
   </div>
-
-  <div class="container mt-3"></div>
 
   <script>
     const firebaseConfig = {
@@ -80,10 +78,8 @@
     firebase.initializeApp(firebaseConfig);
 
     //수정한 부분
-    const db = firebase.firestore();
+    const db = firebase.firestore();    //데이터 저장
     const storage = firebase.storage(); //이미지 저장
-
-    console.log(db);
 
     //유저정보 확인
     let userInfo = localStorage.getItem('user');
@@ -95,23 +91,34 @@
       }
     })
 
-    db.collection('product2').get().then((result) => {
-      result.forEach((doc) => {
-        const {가격, 제목, 이미지} = doc.data();
+    let urlParams = new URLSearchParams(window.location.search);
+    let urlParamsId = urlParams.get('id');
 
-        let $div = `
-        <div class="product">
-          <div class="thumbnail" style="background-image: url(${이미지 || 'https://via.placeholder.com/350'})"></div>
-          <div class="flex-grow-1 p-4">
-            <h5 class="title"><a href="/detail.html?id=${doc.id}">${제목}</a></h5>
-            <p class="date">2022년 7월 27일</p>
-            <p class="price">${가격}원</p>
-            <p class="float-end">❤10</p>
-          </div>
+    db.collection('product2').doc(urlParamsId).get().then((result)=>{
+
+      const {제목, 날짜, 가격, 이미지} = result.data();
+
+      let dataYear = 날짜.toDate().getFullYear();
+      let dataMonth = 날짜.toDate().getMonth() + 1;
+      let dataDate = 날짜.toDate().getDate();
+      let formatDate = dataYear + '년 ' + dataMonth + '월 ' + dataDate + '일';
+
+      $div = `
+        <button id="edit">수정</button>
+        <div class="detail-pic my-4" style="background-image: url(${이미지 || 'https://via.placeholder.com/350'});"></div>
+        <div>
+          <h5>올린사람 : ${JSON.parse(userInfo).displayName}</h5>
+          <hr>
+          <h5 class="title">${제목}</h5>
+          <p class="date">${formatDate}</p>
+          <p class="price">${가격}원</p>
         </div>
       `;
 
-        $('.container').append($div);
+      $('#productDetail').append($div);
+
+      $('#edit').click(function() {
+        window.location.href = `/edit.html?id=${urlParamsId}`;
       })
     })
   </script>

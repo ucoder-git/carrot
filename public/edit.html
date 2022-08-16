@@ -61,11 +61,16 @@
     </div>
   </nav>
 
-  <div class="upload-container">
-    <button class="btn btn-success"><a href='upload.html'>업로드</a></button>
+  <div class="container mt-3">
+    <input type="text" class="form-control mt-2" id="title" placeholder="title">
+    <textarea id="content" class="form-control mt-2">content</textarea>
+    <input type="text" class="form-control mt-2" id="price" placeholder="price">
+    <input type="file" class="form-control mt-2" id="image">
+    <div class="btn-container">
+      <button class="btn btn-danger mt-3" id="send">수정</button>
+      <button class="btn btn-success mt-3" id="prev">이전</button>
+    </div>
   </div>
-
-  <div class="container mt-3"></div>
 
   <script>
     const firebaseConfig = {
@@ -80,10 +85,8 @@
     firebase.initializeApp(firebaseConfig);
 
     //수정한 부분
-    const db = firebase.firestore();
+    const db = firebase.firestore();    //데이터 저장
     const storage = firebase.storage(); //이미지 저장
-
-    console.log(db);
 
     //유저정보 확인
     let userInfo = localStorage.getItem('user');
@@ -95,24 +98,29 @@
       }
     })
 
-    db.collection('product2').get().then((result) => {
-      result.forEach((doc) => {
-        const {가격, 제목, 이미지} = doc.data();
+    let urlParams = new URLSearchParams(window.location.search);
+    let urlParamsId = urlParams.get('id');
 
-        let $div = `
-        <div class="product">
-          <div class="thumbnail" style="background-image: url(${이미지 || 'https://via.placeholder.com/350'})"></div>
-          <div class="flex-grow-1 p-4">
-            <h5 class="title"><a href="/detail.html?id=${doc.id}">${제목}</a></h5>
-            <p class="date">2022년 7월 27일</p>
-            <p class="price">${가격}원</p>
-            <p class="float-end">❤10</p>
-          </div>
-        </div>
-      `;
+    db.collection('product2').doc(urlParamsId).get().then((result)=> {
+      console.log(result.data())
+      const {제목, 내용, 가격, 이미지} = result.data();
 
-        $('.container').append($div);
-      })
+      $('#title').val(제목);
+      $('#content').val(내용);
+      $('#price').val(가격);
+    })
+
+    $('#send').click(function() {
+      let changeItem = {
+        제목 : $('#title').val(),
+        내용 : $('#content').val(),
+        가격 : $('#price').val(),
+      }
+
+      db.collection('product2').doc(urlParamsId).update(changeItem).then(()=> {
+        alert('수정 완료');
+        window.location.href = `/detail.html?id=${urlParamsId}`;
+      });
     })
   </script>
 </body>
